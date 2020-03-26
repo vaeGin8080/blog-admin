@@ -1,16 +1,15 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Layout from "./layoout";
-import "@/styles/index.less";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Layout from "@/layout";
+import "@/styles/public.less";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <Layout></Layout>
-        {/* <Route path="/" component={Layout}></Route> */}
-      </header>
+      <Switch>
+        <Route path="/" component={Layout} />
+      </Switch>
     </div>
   );
 }
