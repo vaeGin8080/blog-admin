@@ -3,7 +3,8 @@ import { withRouter, Redirect, Route } from "react-router-dom";
 
 //首页
 import Home from "@/pages/home";
-import Articre from "@/pages/articre";
+import ArticreList from "@/pages/articre/list";
+import ArticreAdd from "@/pages/articre/add";
 
 class ContentMain extends React.Component {
   render() {
@@ -11,8 +12,9 @@ class ContentMain extends React.Component {
       <div style={{ padding: 16, position: "relative" }}>
         <React.Fragment>
           <Route path="/home" component={Home}></Route>
-          <Route path="/articre" component={Articre}></Route>
-          <Redirect exact from="/" to="/home" />
+          <Route path="/articre/list" component={ArticreList}></Route>
+          <Route path="/articre/add" component={ArticreAdd}></Route>
+          {/* <Redirect exact from="/" to="/home" /> */}
         </React.Fragment>
       </div>
     );

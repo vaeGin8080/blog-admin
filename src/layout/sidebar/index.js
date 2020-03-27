@@ -12,8 +12,8 @@ const menus = [
     icon: "laptop",
     key: "/articre",
     subs: [
-      { key: "/articre", title: "按钮", icon: "" },
-      { key: "/articre2", title: "图标", icon: "" }
+      { key: "/articre/list", title: "文章列表", icon: "" },
+      { key: "/articre/add", title: "添加文章", icon: "" }
     ]
   },
   {
