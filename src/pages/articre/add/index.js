@@ -2,34 +2,55 @@ import React, { Component } from "react";
 import Editor from "for-editor";
 import Update from "@/components/Update";
 import { Form, Input, Button, Checkbox } from "antd";
+import { insert } from "@/api";
 const layout = {
-  labelCol: { span: 4 },
+  labelCol: { xs: { span: 24 }, sm: { span: 4 } },
   wrapperCol: { span: 16 }
 };
 const tailLayout = {
   wrapperCol: { offset: 8, span: 16 }
 };
 class ArticreAdd extends Component {
-  constructor() {
-    super();
+  formRef = React.createRef();
+  constructor(props) {
+    super(props);
     this.state = {
-      value: "2"
+      value: "2",
+      faceImg: ""
     };
     this.onFinish = this.onFinish.bind(this);
     this.onFinishFailed = this.onFinishFailed.bind(this);
+    this.getImgUrl = this.getImgUrl.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
-  onFinish(value) {
-    console.log("Success:", values);
+  componentDidMount() {}
+  onFinish(data) {
+    console.log("Success:", data);
+    let form = {
+      blog_title: data.title,
+      blog_author: data.author,
+      blog_brief: data.brief,
+      blog_tag: data.tag,
+      blog_content: data.editor,
+      blog_cover: this.state.faceImg ? this.state.faceImg : "xxx"
+    };
+    insert(form).then(res => {});
   }
 
   onFinishFailed(errorInfo) {
-    console.log("Failed:", errorInfo);
+    // console.log("Failed:", errorInfo);
   }
 
   handleChange(value) {
     console.log(value);
     this.setState({
       value
+    });
+  }
+
+  getImgUrl(url) {
+    this.setState({
+      faceImg: url
     });
   }
 
@@ -40,29 +61,47 @@ class ArticreAdd extends Component {
         <Form
           {...layout}
           name="basic"
+          ref={this.formRef}
           initialValues={{ remember: true }}
           onFinish={this.onFinish}
           onFinishFailed={this.onFinishFailed}
         >
           <Form.Item
-            label="文章名字"
-            name="username"
+            label="标题"
+            name="title"
             rules={[{ required: true, message: "请输入文章标题" }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            label="封面图片"
-            name="editor"
-            rules={[{ required: true, message: "请上传缩略图" }]}
+            label="作者"
+            name="author"
+            rules={[{ required: true, message: "请输入作者" }]}
           >
-            <Update></Update>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="简介"
+            name="brief"
+            rules={[{ required: true, message: "请输入简介" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="分类"
+            name="tag"
+            rules={[{ required: true, message: "请输入分类" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item label="封面图片" name="faceImg">
+            <Update getImgUrl={this.getImgUrl}></Update>
           </Form.Item>
           <Form.Item label="文章内容" name="editor">
             <Editor
               height="500px"
               value={value}
-              onChange={e => this.handleChange(e)}
+              onChange={this.handleChange}
               preview={true}
               subfield={true}
             />

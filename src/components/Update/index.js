@@ -21,23 +21,27 @@ function beforeUpload(file) {
 }
 
 class Update extends React.Component {
-  state = {
-    loading: false
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false
+    };
+  }
   handleChange = info => {
     if (info.file.status === "uploading") {
       this.setState({ loading: true });
       return;
     }
     if (info.file.status === "done") {
+      console.log(info);
+      this.props.getImgUrl(info.file.response.url);
       // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl =>
+      getBase64(info.file.originFileObj, imageUrl => {
         this.setState({
           imageUrl,
           loading: false
-        })
-      );
+        });
+      });
     }
   };
 

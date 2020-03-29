@@ -5,6 +5,7 @@ import { withRouter, Redirect, Route } from "react-router-dom";
 import Home from "@/pages/home";
 import ArticreList from "@/pages/articre/list";
 import ArticreAdd from "@/pages/articre/add";
+import ArticreDetail from "@/pages/articre/detail";
 
 class ContentMain extends React.Component {
   render() {
@@ -14,6 +15,7 @@ class ContentMain extends React.Component {
           <Route path="/home" component={Home}></Route>
           <Route path="/articre/list" component={ArticreList}></Route>
           <Route path="/articre/add" component={ArticreAdd}></Route>
+          <Route path="/articre/detail/:id" component={ArticreDetail}></Route>
           {/* <Redirect exact from="/" to="/home" /> */}
         </React.Fragment>
       </div>

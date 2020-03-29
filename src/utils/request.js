@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const service = axios.create({
-  baseURL: "/api",
+  baseURL: "http://localhost:3003",
   timeout: 5000
 });
 
@@ -17,11 +17,12 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data;
-    if (res.code !== 200) {
-      return Promise.reject(new Error("Error"));
-    } else {
-      return res;
-    }
+    // if (res.code !== 200) {
+    //   return Promise.reject(new Error("Error"));
+    // } else {
+    //   return res;
+    // }
+    return res;
   },
   error => {
     return Promise.reject(error);
