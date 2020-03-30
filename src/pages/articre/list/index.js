@@ -73,7 +73,7 @@ class ArticreList extends React.Component {
   }
   handleRemove = id => {
     remove({ blog_id: id }).then(res => {
-      if (res.code == "200") {
+      if (res.code === "200") {
         message.success(res.msg);
         this.require();
       } else {
@@ -90,7 +90,6 @@ class ArticreList extends React.Component {
       this.setState({
         list: res.data
       });
-      console.log(this.state.list);
     });
   }
   render() {

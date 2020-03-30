@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Editor from "for-editor";
+import { PageHeader } from "antd";
 import { detail } from "@/api";
 
 var Markdown = require("react-markdown");
@@ -18,19 +20,45 @@ class ArticreDetail extends Component {
     detail({
       blog_id: this.state.id
     }).then(res => {
-      if (res.code == "200") {
-        this.setState({
-          content: res.data.blog_content
-        });
+      if (res.code === "200") {
+        if (res.data.blog_content.match(/^http/)) {
+          fetch(res.data.blog_content)
+            .then(res => res.text())
+            .then(text => this.setState({ content: text }));
+        } else {
+          this.setState({
+            content: res.data.blog_content
+          });
+        }
       }
     });
-    fetch("http://localhost:3003/linux%E5%AE%89%E8%A3%85nodejs.md")
-      .then(res => res.text())
-      .then(text => this.setState({ content: text }));
   }
   render() {
     let { content } = this.state;
-    return <Markdown source={content}></Markdown>;
+    return (
+      <div>
+        <PageHeader
+          className="site-page-header"
+          onBack={() => null}
+          title="详情"
+        />
+        <Editor
+          height="1000px"
+          value={content}
+          onChange={this.handleChange}
+          preview={true}
+          subfield={false}
+          toolbar={{}}
+        />
+        {/* <Markdown
+          source={content}
+          escapeHtml={false}
+          renderers={{
+            code: CodeBlock
+          }}
+        ></Markdown> */}
+      </div>
+    );
   }
 }
 

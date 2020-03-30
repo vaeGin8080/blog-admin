@@ -1,6 +1,7 @@
 import React from "react";
 import { Upload, message } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { getToken, upload } from "@/api";
 
 function getBase64(img, callback) {
   const reader = new FileReader();
@@ -24,7 +25,10 @@ class Update extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: false,
+      domain: "https://upload-z0.qiniup.com/",
+      // 这是七牛云空间的外链默认域名
+      qiniuaddr: "q7ylzu7qc.bkt.clouddn.com"
     };
   }
   handleChange = info => {
@@ -33,8 +37,6 @@ class Update extends React.Component {
       return;
     }
     if (info.file.status === "done") {
-      console.log(info);
-      this.props.getImgUrl(info.file.response.url);
       // Get this url from response in real world.
       getBase64(info.file.originFileObj, imageUrl => {
         this.setState({
@@ -44,6 +46,46 @@ class Update extends React.Component {
       });
     }
   };
+  httpRequest = req => {
+    console.log(req);
+    if (req.file.status === "uploading") {
+      this.setState({ loading: true });
+      return;
+    }
+    // 获取文件后缀
+    let filetype = "";
+    let fileName = req.file.name;
+    let first = fileName.lastIndexOf(".");
+    filetype = fileName.substring(first + 1);
+    if (req.file.type === "image/png") {
+      filetype = "png";
+    }
+    const keyname =
+      "vae-blog-" +
+      new Date().getTime() +
+      Math.floor(Math.random() * 100) +
+      "." +
+      filetype;
+
+    getToken().then(res => {
+      console.log(res);
+      const formdata = new FormData();
+      formdata.append("file", req.file);
+      formdata.append("token", res.data.key);
+      formdata.append("key", keyname);
+      if (res.code === "200") {
+        upload(this.state.domain, formdata).then(resI => {
+          message.success("上传成功");
+          let imgurl = "http://" + this.state.qiniuaddr + "/" + resI.key;
+          this.setState({
+            loading: false,
+            imageUrl: imgurl
+          });
+          this.props.getImgUrl(imgurl);
+        });
+      }
+    });
+  };
 
   render() {
     const uploadButton = (
@@ -52,22 +94,18 @@ class Update extends React.Component {
         <div className="ant-upload-text">Upload</div>
       </div>
     );
-    const { imageUrl } = this.state;
+    const { imageUrl, domain } = this.state;
+    const { img } = this.props;
     return (
       <Upload
         name="avatar"
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        beforeUpload={beforeUpload}
-        onChange={this.handleChange}
+        action={domain}
+        customRequest={this.httpRequest}
       >
-        {imageUrl ? (
-          <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
-        ) : (
-          uploadButton
-        )}
+        {imageUrl ? img : uploadButton}
       </Upload>
     );
   }

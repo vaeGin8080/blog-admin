@@ -13,11 +13,12 @@ class LayoutWrap extends Component {
             <Slide></Slide>
           </Sider>
           <Layout>
-            <Header>Header</Header>
-            <Content>
+            <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
+              Header
+            </Header>
+            <Content style={{ padding: "0 15px", marginTop: 64 }}>
               <ContentMain></ContentMain>
             </Content>
-            <Footer>Footer</Footer>
           </Layout>
         </Layout>
       </div>

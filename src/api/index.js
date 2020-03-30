@@ -37,3 +37,24 @@ export function detail(query) {
     params: query
   });
 }
+
+// 获取凭证
+
+export function getToken(query) {
+  return request({
+    url: "/token",
+    method: "get",
+    params: query
+  });
+}
+
+// 上传
+
+export function upload(url, query) {
+  return request({
+    url: url,
+    method: "post",
+    headers: { "Content-Type": "multipart/form-data" },
+    data: query
+  });
+}
