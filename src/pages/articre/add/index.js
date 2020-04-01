@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Editor from "for-editor";
 import Update from "@/components/Update";
 import UpdateFile from "@/components/UpdateFile";
-import { Form, Input, Button, Tabs, message } from "antd";
-import { insert } from "@/api";
+import { Form, Input, Button, Tabs, message, PageHeader } from "antd";
+import { insert, detail, update } from "@/api";
 const { TabPane } = Tabs;
 const layout = {
   labelCol: { xs: { span: 24 }, sm: { span: 4 } },
@@ -19,9 +19,10 @@ class ArticreAdd extends Component {
     super(props);
     this.state = {
       faceImg: "",
-      content: "",
+      blog_content: "",
       value: "",
-      keys: 1
+      keys: 1,
+      id: this.props.match.params.id
     };
     this.onFinish = this.onFinish.bind(this);
     this.onFinishFailed = this.onFinishFailed.bind(this);
@@ -29,27 +30,71 @@ class ArticreAdd extends Component {
     this.getUrl = this.getUrl.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  componentDidMount() {}
-  onFinish(data) {
-    console.log("Success:", data);
-    console.log(data.editor);
-    console.log(this.state.content);
-    let content = this.state.keys === 1 ? this.state.value : this.state.content;
-    let form = {
-      blog_title: data.title,
-      blog_author: data.author,
-      blog_brief: data.brief,
-      blog_tag: data.tag,
-      blog_content: content,
-      blog_cover: this.state.faceImg ? this.state.faceImg : "xxx"
-    };
-    insert(form).then(res => {
+  componentDidMount() {
+    if (this.state.id) {
+      this.require();
+    }
+  }
+  require() {
+    detail({
+      blog_id: this.state.id
+    }).then(res => {
       if (res.code === "200") {
-        message.success(res.msg);
-      } else {
-        message.error(res.msg);
+        this.formRef.current.setFieldsValue({
+          blog_title: res.data.blog_title,
+          blog_author: res.data.blog_author,
+          blog_brief: res.data.blog_brief,
+          blog_tag: res.data.blog_tag,
+          blog_cover: res.data.blog_cover
+        });
+        this.state.faceImg = res.data.blog_cover;
+        if (res.data.blog_content.match(/^http/)) {
+          fetch(res.data.blog_content)
+            .then(res => res.text())
+            .then(text => this.setState({ value: text }));
+        } else {
+          this.setState({
+            value: res.data.blog_content
+          });
+        }
       }
     });
+  }
+  // 提交
+  onFinish(data) {
+    let { keys, value, blog_content, faceImg, id } = this.state;
+    let content = keys === 1 ? value : blog_content;
+    if (!content || content === "") {
+      message.error("请填写或上传博客内容");
+      return;
+    }
+    let form = {
+      blog_id: id,
+      blog_title: data.blog_title,
+      blog_author: data.blog_author,
+      blog_brief: data.blog_brief,
+      blog_tag: data.blog_tag,
+      blog_content: content,
+      blog_cover: faceImg ? faceImg : ""
+    };
+    if (!id) {
+      insert(form).then(res => {
+        if (res.code === "200") {
+          message.success(res.msg);
+          this.formRef.current.resetFields();
+        } else {
+          message.error(res.msg);
+        }
+      });
+    } else {
+      update(form).then(res => {
+        if (res.code === "200") {
+          message.success(res.msg);
+        } else {
+          message.error(res.msg);
+        }
+      });
+    }
   }
 
   onFinishFailed(errorInfo) {
@@ -69,52 +114,59 @@ class ArticreAdd extends Component {
     });
   }
   getUrl(url) {
-    this.setState({
-      content: url
-    });
+    fetch(url)
+      .then(res => res.text())
+      .then(text => this.setState({ blog_content: text }));
   }
   tabChange = keys => {
     this.setState({
       keys
     });
   };
+  goBack() {
+    this.props.history.goBack();
+  }
 
   render() {
-    const { value } = this.state;
+    const { value, id } = this.state;
     return (
       <div>
+        <PageHeader
+          className="site-page-header"
+          onBack={() => this.goBack()}
+          title={!id ? "新增" : "编辑"}
+        />
         <Form
           {...layout}
           name="basic"
           ref={this.formRef}
-          initialValues={{ remember: true }}
           onFinish={this.onFinish}
           onFinishFailed={this.onFinishFailed}
         >
           <Form.Item
             label="标题"
-            name="title"
+            name="blog_title"
             rules={[{ required: true, message: "请输入文章标题" }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             label="作者"
-            name="author"
+            name="blog_author"
             rules={[{ required: true, message: "请输入作者" }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             label="简介"
-            name="brief"
+            name="blog_brief"
             rules={[{ required: true, message: "请输入简介" }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             label="分类"
-            name="tag"
+            name="blog_tag"
             rules={[{ required: true, message: "请输入分类" }]}
           >
             <Input />
@@ -122,6 +174,7 @@ class ArticreAdd extends Component {
           <Form.Item label="封面图片" name="faceImg">
             <Update
               getImgUrl={this.getImgUrl}
+              isEdit={id ? true : false}
               img={
                 <img
                   src={this.state.faceImg}
@@ -129,11 +182,9 @@ class ArticreAdd extends Component {
                   style={{ width: "100%", height: "102px" }}
                 />
               }
-            >
-              <img src={this.state.faceImg} />
-            </Update>
+            ></Update>
           </Form.Item>
-          <Form.Item label="文章内容" name="editor">
+          <Form.Item label="文章内容" name="blog_content">
             <Tabs
               defaultActiveKey="1"
               tabPosition="right"
@@ -155,7 +206,7 @@ class ArticreAdd extends Component {
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit">
-              提交
+              {!id ? "提交" : "更新"}
             </Button>
           </Form.Item>
         </Form>

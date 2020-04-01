@@ -11,37 +11,7 @@ const menus = [
     title: "文章列表",
     icon: "laptop",
     key: "/articre",
-    subs: [
-      { key: "/articre/list", title: "文章列表", icon: "" },
-      { key: "/articre/add", title: "添加文章", icon: "" }
-    ]
-  },
-  {
-    title: "导航组件",
-    icon: "bars",
-    key: "/home/navigation",
-    subs: [
-      { key: "/home/navigation/dropdown", title: "下拉菜单", icon: "" },
-      { key: "/home/navigation/menu", title: "导航菜单", icon: "" },
-      { key: "/home/navigation/steps", title: "步骤条", icon: "" }
-    ]
-  },
-  {
-    title: "输入组件",
-    icon: "edit",
-    key: "/home/entry",
-    subs: [
-      {
-        key: "/home/entry/form",
-        title: "表单",
-        icon: "",
-        subs: [
-          { key: "/home/entry/form/basic-form", title: "基础表单", icon: "" },
-          { key: "/home/entry/form/step-form", title: "分步表单", icon: "" }
-        ]
-      },
-      { key: "/home/entry/upload", title: "上传", icon: "" }
-    ]
+    subs: [{ key: "/articre/list", title: "文章列表", icon: "" }]
   }
 ];
 class Slide extends React.Component {

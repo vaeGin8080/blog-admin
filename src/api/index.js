@@ -29,6 +29,16 @@ export function remove(query) {
   });
 }
 
+// 修改
+
+export function update(query) {
+  return request({
+    url: "/update",
+    method: "post",
+    data: query
+  });
+}
+
 // 详情
 export function detail(query) {
   return request({

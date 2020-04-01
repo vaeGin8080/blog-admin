@@ -14,7 +14,8 @@ class ContentMain extends React.Component {
         <React.Fragment>
           <Route path="/home" component={Home}></Route>
           <Route path="/articre/list" component={ArticreList}></Route>
-          <Route path="/articre/add" component={ArticreAdd}></Route>
+          <Route path="/articre/add/:id" exact component={ArticreAdd}></Route>
+          <Route path="/articre/add" exact component={ArticreAdd}></Route>
           <Route path="/articre/detail/:id" component={ArticreDetail}></Route>
           {/* <Redirect exact from="/" to="/home" /> */}
         </React.Fragment>

@@ -1,99 +1,44 @@
 import React from "react";
+import { Carousel } from "antd";
+import "./index.css";
 
-function Welcome(props) {
-  let { removeChart } = props;
-  return <h1 onClick={() => removeChart()}>Hello,{props.name}</h1>;
-}
-class Clock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { date: new Date() };
-  }
-
-  componentDidMount() {
-    this.timerID = setInterval(() => this.tick(), 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-
-  tick() {
-    this.setState({
-      date: new Date()
-    });
-  }
-
-  render() {
-    return (
-      <div>
-        <h2>It is {this.state.date.toLocaleTimeString()}</h2>
-      </div>
-    );
-  }
-}
-
-function Slot(props) {
-  return (
-    <div>
-      <div className="left">{props.left}</div>
-      <div className="left">{props.right}</div>
-      {props.children}
-    </div>
-  );
-}
+const imgs = [
+  "http://q7ylzu7qc.bkt.clouddn.com/vae-blog-15857556652821.jpg",
+  "http://q7ylzu7qc.bkt.clouddn.com/vae-blog-158575572730399.jfif",
+  "https://github.com/zhangZhiHao1996/image-store/blob/master/react-admin-master/slide1.jpg?raw=true",
+  "https://github.com/zhangZhiHao1996/image-store/blob/master/react-admin-master/slide2.jpg?raw=true",
+  "https://github.com/zhangZhiHao1996/image-store/blob/master/react-admin-master/slide3.jpg?raw=true",
+  "https://github.com/zhangZhiHao1996/image-store/blob/master/react-admin-master/slide4.jpg?raw=true"
+];
 
 class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-      list: [1, 2, 3, 4, 5]
-    };
-  }
-  inputChange(e) {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  }
-  onClick(name) {
-    console.log(3);
-    this.setState({
-      name: this.state.name + name
-    });
-  }
-
   render() {
-    const { name, list } = this.state;
-    const row = list.map((row, index) => {
-      return <li key={row}>{row * 2}</li>;
-    });
     return (
-      <div>
-        <span onClick={() => this.onClick()}>Home</span>
-        <input
-          autoComplete="off"
-          type="text"
-          name="name"
-          value={name}
-          onChange={e => this.inputChange(e)}
-        />
-        <Welcome name={name} removeChart={e => this.onClick(name)}></Welcome>
-        {row}
-        <Clock></Clock>
-        <Slot
-          left={
-            <Welcome
-              name={name}
-              removeChart={e => this.onClick(name)}
-            ></Welcome>
-          }
-          right=""
-        ></Slot>
+      <div style={styles.bg} className="home">
+        <Carousel arrows effect="fade" className="size">
+          {imgs.map(item => (
+            <div key={item}>
+              <div
+                className="size"
+                style={{ backgroundImage: `url(${item})` }}
+              />
+            </div>
+          ))}
+          {/*不用img标签是因为图片大小会出现问题*/}
+        </Carousel>
       </div>
     );
   }
 }
+
+const styles = {
+  bg: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "calc(100vh - 64px)"
+  }
+};
 
 export default Home;

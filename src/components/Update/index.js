@@ -95,7 +95,7 @@ class Update extends React.Component {
       </div>
     );
     const { imageUrl, domain } = this.state;
-    const { img } = this.props;
+    const { img, isEdit } = this.props;
     return (
       <Upload
         name="avatar"
@@ -105,7 +105,7 @@ class Update extends React.Component {
         action={domain}
         customRequest={this.httpRequest}
       >
-        {imageUrl ? img : uploadButton}
+        {imageUrl ? img : isEdit ? img : uploadButton}
       </Upload>
     );
   }

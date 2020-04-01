@@ -1,15 +1,16 @@
 import React from "react";
-import { Table, Tag, Button, message } from "antd";
+import { Table, Tag, Button, message, Input, Row, Col } from "antd";
 import { getList, remove } from "@/api";
 import { Link } from "react-router-dom";
 import "./index.css";
-const size = "small";
-
+const size = "default";
+const { Search } = Input;
 class ArticreList extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      list: []
+      list: [],
+      loading: false
     };
     this.columns = [
       {
@@ -54,7 +55,9 @@ class ArticreList extends React.Component {
         key: "action",
         render: (text, record) => (
           <div className="table-actions">
-            <Button size={size}>编辑</Button>
+            <Button size={size} type="primary">
+              <Link to={`/articre/add/${text.blog_id}`}>编辑</Link>
+            </Button>
             <Button
               size={size}
               type="primary"
@@ -63,7 +66,10 @@ class ArticreList extends React.Component {
             >
               删除
             </Button>
-            <Button size={size}>
+            <Button
+              size={size}
+              style={{ background: "#67c23a", color: "white" }}
+            >
               <Link to={`/articre/detail/${text.blog_id}`}>查看</Link>
             </Button>
           </div>
@@ -86,19 +92,39 @@ class ArticreList extends React.Component {
     this.require();
   }
   require() {
+    this.setState({
+      loading: true
+    });
     getList().then(res => {
       this.setState({
-        list: res.data
+        list: res.data,
+        loading: false
       });
     });
   }
   render() {
-    let { list } = this.state;
+    let { list, loading } = this.state;
     return (
       <div>
+        <Row className="seach_top" justify="space-between">
+          <Col>
+            <Search
+              placeholder="请输入关键字"
+              enterButton="搜索"
+              size="medium"
+              onSearch={value => console.log(value)}
+            />
+          </Col>
+          <Col>
+            <Button type="primary">
+              <Link to={`/articre/add`}>新增</Link>
+            </Button>
+          </Col>
+        </Row>
         <Table
           columns={this.columns}
           dataSource={list}
+          loading={loading}
           rowKey={(record, index) => index}
         />
       </div>
