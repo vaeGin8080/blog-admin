@@ -28,25 +28,27 @@ class Update extends React.Component {
       loading: false,
       domain: "https://upload-z0.qiniup.com/",
       // 这是七牛云空间的外链默认域名
-      qiniuaddr: "q7ylzu7qc.bkt.clouddn.com"
+      qiniuaddr: "q7ylzu7qc.bkt.clouddn.com",
+      info: {},
     };
   }
-  handleChange = info => {
+  componentDidMount() {}
+  handleChange = (info) => {
     if (info.file.status === "uploading") {
       this.setState({ loading: true });
       return;
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl => {
+      getBase64(info.file.originFileObj, (imageUrl) => {
         this.setState({
           imageUrl,
-          loading: false
+          loading: false,
         });
       });
     }
   };
-  httpRequest = req => {
+  httpRequest = (req) => {
     console.log(req);
     if (req.file.status === "uploading") {
       this.setState({ loading: true });
@@ -61,25 +63,20 @@ class Update extends React.Component {
       filetype = "png";
     }
     const keyname =
-      "vae-blog-" +
-      new Date().getTime() +
-      Math.floor(Math.random() * 100) +
-      "." +
-      filetype;
-
-    getToken().then(res => {
+      "vae-blog-" + fileName + Math.floor(Math.random() * 100) + "." + filetype;
+    getToken().then((res) => {
       console.log(res);
       const formdata = new FormData();
       formdata.append("file", req.file);
       formdata.append("token", res.data.key);
       formdata.append("key", keyname);
       if (res.code === "200") {
-        upload(this.state.domain, formdata).then(resI => {
+        upload(this.state.domain, formdata).then((resI) => {
           message.success("上传成功");
           let imgurl = "http://" + this.state.qiniuaddr + "/" + resI.key;
           this.setState({
             loading: false,
-            imageUrl: imgurl
+            imageUrl: imgurl,
           });
           this.props.getImgUrl(imgurl);
         });

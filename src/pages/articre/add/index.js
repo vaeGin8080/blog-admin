@@ -7,10 +7,10 @@ import { insert, detail, update } from "@/api";
 const { TabPane } = Tabs;
 const layout = {
   labelCol: { xs: { span: 24 }, sm: { span: 4 } },
-  wrapperCol: { span: 16 }
+  wrapperCol: { span: 16 },
 };
 const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 }
+  wrapperCol: { offset: 8, span: 16 },
 };
 
 class ArticreAdd extends Component {
@@ -22,7 +22,7 @@ class ArticreAdd extends Component {
       blog_content: "",
       value: "",
       keys: 1,
-      id: this.props.match.params.id
+      id: this.props.match.params.id,
     };
     this.onFinish = this.onFinish.bind(this);
     this.onFinishFailed = this.onFinishFailed.bind(this);
@@ -37,24 +37,24 @@ class ArticreAdd extends Component {
   }
   require() {
     detail({
-      blog_id: this.state.id
-    }).then(res => {
+      blog_id: this.state.id,
+    }).then((res) => {
       if (res.code === "200") {
         this.formRef.current.setFieldsValue({
           blog_title: res.data.blog_title,
           blog_author: res.data.blog_author,
           blog_brief: res.data.blog_brief,
           blog_tag: res.data.blog_tag,
-          blog_cover: res.data.blog_cover
+          blog_cover: res.data.blog_cover,
         });
         this.state.faceImg = res.data.blog_cover;
         if (res.data.blog_content.match(/^http/)) {
           fetch(res.data.blog_content)
-            .then(res => res.text())
-            .then(text => this.setState({ value: text }));
+            .then((res) => res.text())
+            .then((text) => this.setState({ value: text }));
         } else {
           this.setState({
-            value: res.data.blog_content
+            value: res.data.blog_content,
           });
         }
       }
@@ -75,19 +75,23 @@ class ArticreAdd extends Component {
       blog_brief: data.blog_brief,
       blog_tag: data.blog_tag,
       blog_content: content,
-      blog_cover: faceImg ? faceImg : ""
+      blog_cover: faceImg ? faceImg : "",
     };
     if (!id) {
-      insert(form).then(res => {
+      insert(form).then((res) => {
         if (res.code === "200") {
           message.success(res.msg);
           this.formRef.current.resetFields();
+          this.setState({
+            blog_content: "",
+            value: "",
+          });
         } else {
           message.error(res.msg);
         }
       });
     } else {
-      update(form).then(res => {
+      update(form).then((res) => {
         if (res.code === "200") {
           message.success(res.msg);
         } else {
@@ -104,23 +108,23 @@ class ArticreAdd extends Component {
   handleChange(value) {
     console.log(value);
     this.setState({
-      value
+      value,
     });
   }
 
   getImgUrl(url) {
     this.setState({
-      faceImg: url
+      faceImg: url,
     });
   }
   getUrl(url) {
     fetch(url)
-      .then(res => res.text())
-      .then(text => this.setState({ blog_content: text }));
+      .then((res) => res.text())
+      .then((text) => this.setState({ blog_content: text }));
   }
-  tabChange = keys => {
+  tabChange = (keys) => {
     this.setState({
-      keys
+      keys,
     });
   };
   goBack() {
@@ -171,20 +175,24 @@ class ArticreAdd extends Component {
           >
             <Input />
           </Form.Item>
-          <Form.Item label="封面图片" name="faceImg">
+          <Form.Item label="封面图片">
             <Update
               getImgUrl={this.getImgUrl}
               isEdit={id ? true : false}
               img={
                 <img
                   src={this.state.faceImg}
-                  alt="avatar"
+                  alt="avatar12"
                   style={{ width: "100%", height: "102px" }}
                 />
               }
             ></Update>
           </Form.Item>
-          <Form.Item label="文章内容" name="blog_content">
+          <Form.Item
+            label="文章内容"
+            name="blog_title"
+            rules={[{ required: true, message: "请上传或填写内容" }]}
+          >
             <Tabs
               defaultActiveKey="1"
               tabPosition="right"

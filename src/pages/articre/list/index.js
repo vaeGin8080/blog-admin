@@ -2,7 +2,7 @@ import React from "react";
 import { Table, Tag, Button, message, Input, Row, Col } from "antd";
 import { getList, remove } from "@/api";
 import { Link } from "react-router-dom";
-import "./index.css";
+import "./index.scss";
 const size = "default";
 const { Search } = Input;
 class ArticreList extends React.Component {

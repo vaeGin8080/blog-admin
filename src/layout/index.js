@@ -6,25 +6,29 @@ import Head from "@/components/Head";
 
 const { Header, Footer, Sider, Content } = Layout;
 class LayoutWrap extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <div className="App">
         <Layout className="App">
-          <Sider>
-            <Slide></Slide>
-          </Sider>
+          <Header
+            style={{
+              position: "fixed",
+              zIndex: 1,
+              maxWidth: "100%",
+              width: " calc(100%)",
+              boxSizing: "border-box",
+            }}
+          >
+            <Head history={this.props.history}></Head>
+          </Header>
+
           <Layout>
-            <Header
-              style={{
-                position: "fixed",
-                zIndex: 1,
-                maxWidth: "100%",
-                width: " calc(100% - 200px)",
-                boxSizing: "border-box"
-              }}
-            >
-              <Head></Head>
-            </Header>
+            <Sider breakpoint="lg" collapsedWidth="0">
+              <Slide></Slide>
+            </Sider>
             <Content style={{ padding: "0 0px", marginTop: 64 }}>
               <ContentMain></ContentMain>
             </Content>

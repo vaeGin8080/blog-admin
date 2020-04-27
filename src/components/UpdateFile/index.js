@@ -10,11 +10,11 @@ class Update extends React.Component {
       fileName: "",
       domain: "https://upload-z0.qiniup.com/",
       // 这是七牛云空间的外链默认域名
-      qiniuaddr: "q7ylzu7qc.bkt.clouddn.com"
+      qiniuaddr: "q7ylzu7qc.bkt.clouddn.com",
     };
   }
 
-  httpRequest = req => {
+  httpRequest = (req) => {
     // 获取文件后缀
     let filetype = "";
     let fileName = req.file.name;
@@ -29,14 +29,17 @@ class Update extends React.Component {
       "." +
       filetype;
 
-    getToken().then(res => {
+    getToken().then((res) => {
       const formdata = new FormData();
       formdata.append("file", req.file);
       formdata.append("token", res.data.key);
       formdata.append("key", keyname);
       if (res.code === "200") {
-        upload(this.state.domain, formdata).then(resI => {
+        upload(this.state.domain, formdata).then((resI) => {
           message.success("上传成功");
+          this.setState({
+            fileName,
+          });
           let url = "http://" + this.state.qiniuaddr + "/" + resI.key;
           this.props.getUrl(url);
         });
@@ -45,12 +48,12 @@ class Update extends React.Component {
   };
 
   render() {
-    const { domain } = this.state;
+    const { domain, fileName } = this.state;
     const props = {
       name: "file",
-      showUploadList: true,
+      showUploadList: false,
       action: domain,
-      customRequest: this.httpRequest
+      customRequest: this.httpRequest,
     };
     return (
       <div>
@@ -58,10 +61,9 @@ class Update extends React.Component {
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
           </p>
-          <p className="ant-upload-text">
-            Click or drag file to this area to upload
-          </p>
+          <p className="ant-upload-text">{!fileName ? "点击或拖拽上传" : ""}</p>
         </Dragger>
+        {fileName ? fileName : ""}
       </div>
     );
   }

@@ -1,14 +1,11 @@
 import React from "react";
 import { Carousel } from "antd";
-import "./index.css";
+import "./index.scss";
 
 const imgs = [
-  "http://q7ylzu7qc.bkt.clouddn.com/vae-blog-15857556652821.jpg",
+  // "http://q7ylzu7qc.bkt.clouddn.com/vae-blog-15857556652821.jpg",
+  "http://q7ylzu7qc.bkt.clouddn.com/vae-blog-158583651364492.jpg",
   "http://q7ylzu7qc.bkt.clouddn.com/vae-blog-158575572730399.jfif",
-  "https://github.com/zhangZhiHao1996/image-store/blob/master/react-admin-master/slide1.jpg?raw=true",
-  "https://github.com/zhangZhiHao1996/image-store/blob/master/react-admin-master/slide2.jpg?raw=true",
-  "https://github.com/zhangZhiHao1996/image-store/blob/master/react-admin-master/slide3.jpg?raw=true",
-  "https://github.com/zhangZhiHao1996/image-store/blob/master/react-admin-master/slide4.jpg?raw=true"
 ];
 
 class Home extends React.Component {
@@ -16,7 +13,7 @@ class Home extends React.Component {
     return (
       <div style={styles.bg} className="home">
         <Carousel arrows effect="fade" className="size">
-          {imgs.map(item => (
+          {imgs.map((item) => (
             <div key={item}>
               <div
                 className="size"
@@ -37,8 +34,8 @@ const styles = {
     top: 0,
     left: 0,
     width: "100%",
-    height: "calc(100vh - 64px)"
-  }
+    height: "calc(100vh - 64px)",
+  },
 };
 
 export default Home;

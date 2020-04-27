@@ -5,14 +5,14 @@ const menus = [
   {
     title: "首页",
     icon: "home",
-    key: "/home"
+    key: "/home",
   },
   {
     title: "文章列表",
     icon: "laptop",
     key: "/articre",
-    subs: [{ key: "/articre/list", title: "文章列表", icon: "" }]
-  }
+    subs: [{ key: "/articre/list", title: "文章列表", icon: "" }],
+  },
 ];
 class Slide extends React.Component {
   render() {

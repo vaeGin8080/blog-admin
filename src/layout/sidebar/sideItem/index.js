@@ -2,23 +2,25 @@ import React from "react";
 import { Menu, Slider } from "antd";
 import Logo from "../logo";
 import { Link, Router } from "react-router-dom";
+import { FireOutlined, StarFilled, StarTwoTone } from "@ant-design/icons";
+
 const { SubMenu } = Menu;
 class SlideItem extends React.Component {
   rootSubmenuKeys = ["sub1", "sub2", "sub4"];
 
   state = {
-    openKeys: ["sub1"]
+    openKeys: ["sub1"],
   };
   // 菜单展开关闭时触发
-  onOpenChange = openKeys => {
+  onOpenChange = (openKeys) => {
     const latestOpenKey = openKeys.find(
-      key => this.state.openKeys.indexOf(key) === -1
+      (key) => this.state.openKeys.indexOf(key) === -1
     );
     if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
       this.setState({ openKeys });
     } else {
       this.setState({
-        openKeys: latestOpenKey ? [latestOpenKey] : []
+        openKeys: latestOpenKey ? [latestOpenKey] : [],
       });
     }
   };
@@ -26,6 +28,7 @@ class SlideItem extends React.Component {
     return (
       <Menu.Item key={key}>
         <Link to={key}>
+          <FireOutlined />
           <span>{title}</span>
         </Link>
       </Menu.Item>
@@ -42,7 +45,7 @@ class SlideItem extends React.Component {
         }
       >
         {subs &&
-          subs.map(item => {
+          subs.map((item) => {
             return item.subs && item.subs.length > 0
               ? this.renderSubMenu(item)
               : this.renderMenuItem(item);
@@ -62,7 +65,7 @@ class SlideItem extends React.Component {
           style={{ width: 200 }}
         >
           {this.props.menus &&
-            this.props.menus.map(item => {
+            this.props.menus.map((item) => {
               return item.subs && item.subs.length > 0
                 ? this.renderSubMenu(item)
                 : this.renderMenuItem(item);

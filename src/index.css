@@ -16,3 +16,71 @@ code {
   width: 100%;
   height: 100%;
 }
+
+/* flex布局 */
+.flex {
+  display: flex;
+}
+
+.flex-sub {
+  flex: 1;
+}
+
+.flex-twice {
+  flex: 2;
+}
+
+.flex-treble {
+  flex: 3;
+}
+
+.flex-direction {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.flex-ali {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-center {
+  display: flex;
+  align-items: center;
+}
+/* flex布局 */

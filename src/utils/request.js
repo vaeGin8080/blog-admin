@@ -1,22 +1,26 @@
 import axios from "axios";
+import { getSession } from "@/utils/session";
 
 const service = axios.create({
-  baseURL: "http://localhost:3333",
-  // baseURL: "https://www.vaegin.top/blog",
-  timeout: 50000
+  // baseURL: "http://192.168.1.19:3333",
+  baseURL: "https://www.vaegin.top/blog",
+  timeout: 50000,
 });
 
 service.interceptors.request.use(
-  config => {
+  (config) => {
+    let userInfo = getSession("userInfo");
+    let uid = userInfo && userInfo.user_id;
+    config.headers["uid"] = uid || "";
     return config;
   },
-  error => {
+  (error) => {
     return Promise.reject(error);
   }
 );
 
 service.interceptors.response.use(
-  response => {
+  (response) => {
     const res = response.data;
     // if (res.code !== 200) {
     //   return Promise.reject(new Error("Error"));
@@ -25,7 +29,7 @@ service.interceptors.response.use(
     // }
     return res;
   },
-  error => {
+  (error) => {
     return Promise.reject(error);
   }
 );

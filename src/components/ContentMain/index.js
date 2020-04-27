@@ -1,5 +1,6 @@
 import React from "react";
-import { withRouter, Redirect, Route } from "react-router-dom";
+import { withRouter, Redirect, Route, Switch } from "react-router-dom";
+import PrivateRoute from "../PrivateRoute";
 
 //首页
 import Home from "@/pages/home";
@@ -12,12 +13,29 @@ class ContentMain extends React.Component {
     return (
       <div style={{ padding: 16, position: "relative" }}>
         <React.Fragment>
-          <Route path="/home" component={Home}></Route>
-          <Route path="/articre/list" component={ArticreList}></Route>
-          <Route path="/articre/add/:id" exact component={ArticreAdd}></Route>
-          <Route path="/articre/add" exact component={ArticreAdd}></Route>
-          <Route path="/articre/detail/:id" component={ArticreDetail}></Route>
-          {/* <Redirect exact from="/" to="/home" /> */}
+          <Switch>
+            <PrivateRoute path="/home" component={Home}></PrivateRoute>
+            <PrivateRoute
+              path="/articre/list"
+              component={ArticreList}
+            ></PrivateRoute>
+            <PrivateRoute
+              path="/articre/add/:id"
+              exact
+              component={ArticreAdd}
+            ></PrivateRoute>
+            <PrivateRoute
+              path="/articre/add"
+              exact
+              component={ArticreAdd}
+            ></PrivateRoute>
+            <PrivateRoute
+              path="/articre/detail/:id"
+              component={ArticreDetail}
+            ></PrivateRoute>
+          </Switch>
+
+          <Redirect exact from="/" to="/home" />
         </React.Fragment>
       </div>
     );
