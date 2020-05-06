@@ -5,7 +5,7 @@ export function getList(query) {
   return request({
     url: "/list",
     method: "get",
-    params: query
+    params: query,
   });
 }
 
@@ -15,7 +15,7 @@ export function insert(query) {
   return request({
     url: "/insert",
     method: "post",
-    data: query
+    data: query,
   });
 }
 
@@ -25,7 +25,7 @@ export function remove(query) {
   return request({
     url: "/delete",
     method: "get",
-    params: query
+    params: query,
   });
 }
 
@@ -35,7 +35,7 @@ export function update(query) {
   return request({
     url: "/update",
     method: "post",
-    data: query
+    data: query,
   });
 }
 
@@ -44,7 +44,7 @@ export function detail(query) {
   return request({
     url: "/detail",
     method: "get",
-    params: query
+    params: query,
   });
 }
 
@@ -54,17 +54,17 @@ export function getToken(query) {
   return request({
     url: "/token",
     method: "get",
-    params: query
+    params: query,
   });
 }
 
 // 上传
 
-export function upload(url, query) {
+export function upload(query) {
   return request({
-    url: url,
+    url: "https://upload-z0.qiniup.com/",
     method: "post",
     headers: { "Content-Type": "multipart/form-data" },
-    data: query
+    data: query,
   });
 }

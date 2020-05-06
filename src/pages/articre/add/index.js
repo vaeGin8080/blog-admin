@@ -40,13 +40,14 @@ class ArticreAdd extends Component {
       blog_id: this.state.id,
     }).then((res) => {
       if (res.code === "200") {
-        this.formRef.current.setFieldsValue({
-          blog_title: res.data.blog_title,
-          blog_author: res.data.blog_author,
-          blog_brief: res.data.blog_brief,
-          blog_tag: res.data.blog_tag,
-          blog_cover: res.data.blog_cover,
-        });
+        this.formRef &&
+          this.formRef.current.setFieldsValue({
+            blog_title: res.data.blog_title,
+            blog_author: res.data.blog_author,
+            blog_brief: res.data.blog_brief,
+            blog_tag: res.data.blog_tag,
+            blog_cover: res.data.blog_cover,
+          });
         this.state.faceImg = res.data.blog_cover;
         if (res.data.blog_content.match(/^http/)) {
           fetch(res.data.blog_content)
@@ -85,6 +86,7 @@ class ArticreAdd extends Component {
           this.setState({
             blog_content: "",
             value: "",
+            faceImg: "",
           });
         } else {
           message.error(res.msg);
@@ -190,7 +192,6 @@ class ArticreAdd extends Component {
           </Form.Item>
           <Form.Item
             label="文章内容"
-            name="blog_title"
             rules={[{ required: true, message: "请上传或填写内容" }]}
           >
             <Tabs

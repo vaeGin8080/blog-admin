@@ -2,8 +2,8 @@ import axios from "axios";
 import { getSession } from "@/utils/session";
 
 const service = axios.create({
-  // baseURL: "http://192.168.1.19:3333",
-  baseURL: "https://www.vaegin.top/blog",
+  baseURL: "http://localhost:3333",
+  // baseURL: "https://www.vaegin.top/blog",
   timeout: 50000,
 });
 

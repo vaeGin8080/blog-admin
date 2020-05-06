@@ -26,9 +26,6 @@ class Update extends React.Component {
     super(props);
     this.state = {
       loading: false,
-      domain: "https://upload-z0.qiniup.com/",
-      // 这是七牛云空间的外链默认域名
-      qiniuaddr: "q7ylzu7qc.bkt.clouddn.com",
       info: {},
     };
   }
@@ -58,22 +55,18 @@ class Update extends React.Component {
     let filetype = "";
     let fileName = req.file.name;
     let first = fileName.lastIndexOf(".");
-    filetype = fileName.substring(first + 1);
-    if (req.file.type === "image/png") {
-      filetype = "png";
-    }
-    const keyname =
-      "vae-blog-" + fileName + Math.floor(Math.random() * 100) + "." + filetype;
+    filetype = fileName.substring(0, first) + new Date().getTime();
+    console.log(req);
     getToken().then((res) => {
       console.log(res);
       const formdata = new FormData();
       formdata.append("file", req.file);
       formdata.append("token", res.data.key);
-      formdata.append("key", keyname);
+      formdata.append("key", filetype);
       if (res.code === "200") {
-        upload(this.state.domain, formdata).then((resI) => {
+        upload(formdata).then((resI) => {
           message.success("上传成功");
-          let imgurl = "http://" + this.state.qiniuaddr + "/" + resI.key;
+          let imgurl = res.data.doman + "/" + resI.key;
           this.setState({
             loading: false,
             imageUrl: imgurl,
