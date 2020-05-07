@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import Editor from "for-editor";
 import Update from "@/components/Update";
 import UpdateFile from "@/components/UpdateFile";
-import { Form, Input, Button, Tabs, message, PageHeader } from "antd";
+import { Form, Input, Button, Tabs, message, PageHeader, Select } from "antd";
 import { insert, detail, update } from "@/api";
 const { TabPane } = Tabs;
+const { Option } = Select;
 const layout = {
   labelCol: { xs: { span: 24 }, sm: { span: 4 } },
   wrapperCol: { span: 16 },
@@ -12,7 +13,15 @@ const layout = {
 const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
-
+const tag = ["前端", "后端", "其他"];
+const tagOption = tag.map((item, index) => {
+  return (
+    <Option value={item} key={index}>
+      {item}
+    </Option>
+  );
+});
+console.log(tagOption);
 class ArticreAdd extends Component {
   formRef = React.createRef();
   constructor(props) {
@@ -173,9 +182,11 @@ class ArticreAdd extends Component {
           <Form.Item
             label="分类"
             name="blog_tag"
-            rules={[{ required: true, message: "请输入分类" }]}
+            rules={[{ required: true, message: "请选择分类" }]}
           >
-            <Input />
+            <Select placeholder="请选择分类" allowClear>
+              {tagOption}
+            </Select>
           </Form.Item>
           <Form.Item label="封面图片">
             <Update

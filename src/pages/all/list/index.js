@@ -1,16 +1,15 @@
 import React from "react";
 import { Table, Tag, Button, message, Input, Row, Col, Modal } from "antd";
-import { getList, remove } from "@/api";
+import { getAllList, remove } from "@/api";
 import { Link } from "react-router-dom";
 import { parseTime } from "@/utils/utils";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-
 import "./index.scss";
 const size = "default";
 const { Search } = Input;
 const { confirm } = Modal;
 
-class ArticreList extends React.Component {
+class AllList extends React.Component {
   constructor(props) {
     super();
     this.state = {
@@ -126,7 +125,7 @@ class ArticreList extends React.Component {
     this.setState({
       loading: true,
     });
-    getList(obj).then((res) => {
+    getAllList(obj).then((res) => {
       this.setState({
         list: res.data,
         loading: false,
@@ -146,11 +145,6 @@ class ArticreList extends React.Component {
               onSearch={this.handleSearch}
             />
           </Col>
-          <Col>
-            <Button type="primary">
-              <Link to={`/articre/add`}>新增</Link>
-            </Button>
-          </Col>
         </Row>
         <Table
           columns={this.columns}
@@ -163,4 +157,4 @@ class ArticreList extends React.Component {
   }
 }
 
-export default ArticreList;
+export default AllList;

@@ -6,12 +6,12 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showBox: "login"
+      showBox: "login",
     };
   }
-  switchShowBox = box => {
+  switchShowBox = (box) => {
     this.setState({
-      showBox: box
+      showBox: box,
     });
   };
   render() {
@@ -22,13 +22,13 @@ class Login extends Component {
         <div className="login_box">
           <LoginForm
             history={this.props.history}
-            className={showBox == "login" ? "box box-show" : "box box-hidden"}
+            className={showBox === "login" ? "box box-show" : "box box-hidden"}
             switchShowBox={this.switchShowBox}
           ></LoginForm>
           <RegisterForm
             history={this.props.history}
             className={
-              showBox == "register" ? "box box-show" : "box box-hidden"
+              showBox === "register" ? "box box-show" : "box box-hidden"
             }
             switchShowBox={this.switchShowBox}
           ></RegisterForm>

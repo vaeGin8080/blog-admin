@@ -4,6 +4,7 @@ import PrivateRoute from "../PrivateRoute";
 
 //首页
 import Home from "@/pages/home";
+import AllList from "@/pages/all/list";
 import ArticreList from "@/pages/articre/list";
 import ArticreAdd from "@/pages/articre/add";
 import ArticreDetail from "@/pages/articre/detail";
@@ -14,7 +15,9 @@ class ContentMain extends React.Component {
       <div style={{ padding: 16, position: "relative" }}>
         <React.Fragment>
           <Switch>
+            <Redirect exact from="/" to="/home" />
             <PrivateRoute path="/home" component={Home}></PrivateRoute>
+            <PrivateRoute path="/all/list" component={AllList}></PrivateRoute>
             <PrivateRoute
               path="/articre/list"
               component={ArticreList}
@@ -34,8 +37,6 @@ class ContentMain extends React.Component {
               component={ArticreDetail}
             ></PrivateRoute>
           </Switch>
-
-          <Redirect exact from="/" to="/home" />
         </React.Fragment>
       </div>
     );

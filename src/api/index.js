@@ -1,6 +1,15 @@
 import request from "@/utils/request.js";
 
-// 查询列表
+// 查询所有用户文章列表
+export function getAllList(query) {
+  return request({
+    url: "/webList",
+    method: "post",
+    data: query,
+  });
+}
+
+// 查询当前用户文章列表
 export function getList(query) {
   return request({
     url: "/list",

@@ -3,12 +3,18 @@ import SlideItem from "./sideItem/index.js";
 
 const menus = [
   {
-    title: "首页",
+    title: "工作台",
     icon: "home",
     key: "/home",
   },
   {
-    title: "文章列表",
+    title: "所有人",
+    icon: "laptop",
+    key: "/all",
+    subs: [{ key: "/all/list", title: "所有文章列表", icon: "" }],
+  },
+  {
+    title: "我的",
     icon: "laptop",
     key: "/articre",
     subs: [{ key: "/articre/list", title: "文章列表", icon: "" }],
