@@ -11,7 +11,7 @@ class ArticreDetail extends Component {
     this.state = {
       content: "# 12",
       id: this.props.match.params.id,
-      form: {}
+      form: {},
     };
   }
   goBack() {
@@ -22,26 +22,26 @@ class ArticreDetail extends Component {
   }
   require() {
     detail({
-      blog_id: this.state.id
-    }).then(res => {
+      blog_id: this.state.id,
+    }).then((res) => {
       if (res.code === "200") {
         let form = {
           blog_title: res.data.blog_title,
           blog_author: res.data.blog_author,
           blog_brief: res.data.blog_brief,
           blog_tag: res.data.blog_tag,
-          blog_cover: res.data.blog_cover
+          blog_cover: res.data.blog_cover,
         };
         this.setState({
-          form: form
+          form: form,
         });
         if (res.data.blog_content.match(/^http/)) {
           fetch(res.data.blog_content)
-            .then(res => res.text())
-            .then(text => this.setState({ content: text }));
+            .then((res) => res.text())
+            .then((text) => this.setState({ content: text }));
         } else {
           this.setState({
-            content: res.data.blog_content
+            content: res.data.blog_content,
           });
         }
       }
@@ -50,7 +50,7 @@ class ArticreDetail extends Component {
   render() {
     let { content, form } = this.state;
     return (
-      <div>
+      <div className="detail">
         <PageHeader
           className="site-page-header"
           onBack={() => this.goBack()}
@@ -61,7 +61,7 @@ class ArticreDetail extends Component {
             background: "white",
             borderRadius: "10px",
             padding: "10px",
-            marginBottom: "20px"
+            marginBottom: "20px",
           }}
         >
           <Row gutter={[16, 8]}>
@@ -112,7 +112,8 @@ class ArticreDetail extends Component {
           <Col flex="200px">博客内容:</Col>
         </Row>
         <Editor
-          height="1000px"
+          height="auto"
+          style={{ maxHeihgt: "100%" }}
           value={content}
           onChange={this.handleChange}
           preview={true}

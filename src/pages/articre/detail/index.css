@@ -6,3 +6,7 @@
 .value {
   font-size: 16px;
 }
+
+.detail .for-editor-block {
+  display: none !important;
+}

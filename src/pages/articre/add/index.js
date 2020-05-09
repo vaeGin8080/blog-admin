@@ -4,6 +4,8 @@ import Update from "@/components/Update";
 import UpdateFile from "@/components/UpdateFile";
 import { Form, Input, Button, Tabs, message, PageHeader, Select } from "antd";
 import { insert, detail, update } from "@/api";
+import "./index.css";
+
 const { TabPane } = Tabs;
 const { Option } = Select;
 const layout = {
@@ -196,7 +198,7 @@ class ArticreAdd extends Component {
                 <img
                   src={this.state.faceImg}
                   alt="avatar12"
-                  style={{ width: "100%", height: "102px" }}
+                  style={{ width: "100%", height: "80px", objectFit: "cover" }}
                 />
               }
             ></Update>
