@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Row, Col, Avatar, Menu, Dropdown, message } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
-import { removeAll } from "@/utils/session";
+import { removeAll, getSession } from "@/utils/session";
 
 class Head extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class Head extends Component {
     this.props.history.push("/login");
   };
   render() {
+    // const user = getSession("userInfo").user_name || "Vae";
     const user = "Vae";
     const color = "#f56a00";
     const menu = (

@@ -3,7 +3,7 @@ import request from "@/utils/request.js";
 // 查询所有用户文章列表
 export function getAllList(query) {
   return request({
-    url: "/webList",
+    url: "/weblist",
     method: "post",
     data: query,
   });

@@ -15,6 +15,10 @@ class AllList extends React.Component {
     this.state = {
       list: [],
       loading: false,
+      pagination: {
+        page: 1,
+        pageSize: 10,
+      },
     };
     this.columns = [
       {
@@ -119,7 +123,12 @@ class AllList extends React.Component {
   };
 
   require(name) {
+    let { pagination } = this.state;
+
+    console.log(pagination);
     let obj = {
+      page: pagination.page,
+      pageSize: pagination.pageSize,
       name,
     };
     this.setState({
@@ -127,13 +136,27 @@ class AllList extends React.Component {
     });
     getAllList(obj).then((res) => {
       this.setState({
-        list: res.data,
+        list: res.data.data,
         loading: false,
+        pagination: {
+          total: res.data.page.total,
+        },
       });
     });
   }
+  handleTableChange = (pagination) => {
+    console.log(pagination);
+    this.setState({
+      pagination: {
+        page: pagination.current,
+        pageSize: pagination.pageSize,
+      },
+    });
+    this.require();
+  };
+
   render() {
-    let { list, loading } = this.state;
+    let { list, loading, pagination } = this.state;
     return (
       <div>
         <Row className="seach_top" justify="space-between">
@@ -150,6 +173,8 @@ class AllList extends React.Component {
           columns={this.columns}
           dataSource={list}
           loading={loading}
+          pagination={pagination}
+          onChange={this.handleTableChange}
           rowKey={(record, index) => index}
         />
       </div>
