@@ -12,8 +12,7 @@ const service = axios.create({
 
 service.interceptors.request.use(
   (config) => {
-    let userInfo = getSession("userInfo");
-    let uid = userInfo && userInfo.user_id;
+    let uid = getSession("uid");
     config.headers["uid"] = uid || "";
     return config;
   },

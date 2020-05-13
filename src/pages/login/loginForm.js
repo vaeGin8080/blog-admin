@@ -21,7 +21,7 @@ class LoginForm extends Component {
     getLogin(obj).then((res) => {
       if (res.code === "200") {
         setSession("isLogin", true);
-        setSession("userInfo", res.data);
+        setSession("uid", res.data);
         message.success(res.msg);
         this.props.history.push("/");
       } else {

@@ -125,7 +125,6 @@ class AllList extends React.Component {
   require(name) {
     let { pagination } = this.state;
 
-    console.log(pagination);
     let obj = {
       page: pagination.page,
       pageSize: pagination.pageSize,
@@ -134,11 +133,14 @@ class AllList extends React.Component {
     this.setState({
       loading: true,
     });
+    console.log(obj);
     getAllList(obj).then((res) => {
       this.setState({
         list: res.data.data,
         loading: false,
         pagination: {
+          page: pagination.page,
+          pageSize: pagination.pageSize,
           total: res.data.page.total,
         },
       });
@@ -146,13 +148,17 @@ class AllList extends React.Component {
   }
   handleTableChange = (pagination) => {
     console.log(pagination);
-    this.setState({
-      pagination: {
-        page: pagination.current,
-        pageSize: pagination.pageSize,
+    this.setState(
+      {
+        pagination: {
+          page: pagination.current,
+          pageSize: pagination.pageSize,
+        },
       },
-    });
-    this.require();
+      () => {
+        this.require();
+      }
+    );
   };
 
   render() {
