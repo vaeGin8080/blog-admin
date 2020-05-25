@@ -1,7 +1,7 @@
 import React from "react";
 import { Upload, message } from "antd";
 import { InboxOutlined, StarOutlined } from "@ant-design/icons";
-import { getToken, upload } from "@/api";
+import { getToken, realUpload } from "@/api";
 const { Dragger } = Upload;
 class Update extends React.Component {
   constructor(props) {
@@ -12,7 +12,27 @@ class Update extends React.Component {
   }
 
   httpRequest = (req) => {
-    // 获取文件后缀
+    let fileName = req.file.name;
+    let form = new FormData();
+    // 后端接受参数 ，可以接受多个参数
+    form.append("file", req.file);
+    realUpload(form)
+      .then((res) => {
+        console.log(res.status);
+        if (res.status == 1) {
+          message.success("上传成功");
+          this.setState({
+            fileName,
+          });
+          this.props.getUrl(res.data.filename);
+        } else {
+        }
+      })
+      .catch((rej) => {
+        message.error("上传失败");
+      });
+
+    /* // 获取文件后缀
     let filetype = "";
     let fileName = req.file.name;
     let first = fileName.lastIndexOf(".");
@@ -36,7 +56,7 @@ class Update extends React.Component {
           this.props.getUrl(url);
         });
       }
-    });
+    }); */
   };
 
   render() {

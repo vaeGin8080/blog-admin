@@ -4,8 +4,8 @@ import "./index.scss";
 
 const imgs = [
   // "https://www.vaegin.top/img/angel.jpg",
-  "https://www.vaegin.top/img/bg.jpg",
-  "https://www.vaegin.top/img/bg4.jpg",
+  "https://www.vaegin.top/images/bg.jpg",
+  "https://www.vaegin.top/images/bg4.jpg",
 ];
 
 class Home extends React.Component {

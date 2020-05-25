@@ -3,6 +3,7 @@ import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { setSession } from "@/utils/session";
 import { getLogin } from "@/api/login";
+import md5 from "js-md5";
 import "./index.scss";
 
 class LoginForm extends Component {
@@ -16,7 +17,7 @@ class LoginForm extends Component {
     console.log("Success:", values);
     let obj = {
       user_name: values.name,
-      user_password: values.password,
+      user_password: md5(values.password),
     };
     getLogin(obj).then((res) => {
       if (res.code === "200") {

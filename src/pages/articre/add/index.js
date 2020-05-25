@@ -43,7 +43,7 @@ class ArticreAdd extends Component {
   }
   componentDidMount() {
     if (this.state.id) {
-      this.require();
+      // this.require();
     }
   }
   require() {

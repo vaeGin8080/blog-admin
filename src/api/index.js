@@ -77,3 +77,14 @@ export function upload(query) {
     data: query,
   });
 }
+
+// 上传
+
+export function realUpload(query) {
+  return request({
+    url: "/upload",
+    method: "post",
+    headers: { "Content-Type": "multipart/form-data" },
+    data: query,
+  });
+}

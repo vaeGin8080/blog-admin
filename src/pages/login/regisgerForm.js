@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { getRegister } from "@/api/login";
+import md5 from "js-md5";
 import "./index.scss";
 
 class RegisterForm extends Component {
@@ -16,7 +17,7 @@ class RegisterForm extends Component {
     console.log(values);
     let obj = {
       user_name: values.name,
-      user_password: values.password,
+      user_password: md5(values.password),
     };
     getRegister(obj).then((res) => {
       console.log(res);

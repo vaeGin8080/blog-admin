@@ -11,6 +11,7 @@ const menus = [
     title: "所有人",
     icon: "laptop",
     key: "/all",
+    meta: ["admin"],
     subs: [{ key: "/all/list", title: "所有文章列表", icon: "" }],
   },
   {

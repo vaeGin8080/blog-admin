@@ -1,7 +1,7 @@
 import React from "react";
 import { Upload, message } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { getToken, upload } from "@/api";
+import { getToken, realUpload } from "@/api";
 
 function getBase64(img, callback) {
   const reader = new FileReader();
@@ -46,12 +46,31 @@ class Update extends React.Component {
     }
   };
   httpRequest = (req) => {
-    console.log(req);
     if (req.file.status === "uploading") {
       this.setState({ loading: true });
       return;
     }
-    // 获取文件后缀
+    let fileName = req.file.name;
+    let form = new FormData();
+    // 后端接受参数 ，可以接受多个参数
+    form.append("file", req.file);
+    realUpload(form)
+      .then((res) => {
+        console.log(res.status);
+        if (res.status == 1) {
+          message.success("上传成功");
+          this.setState({
+            loading: false,
+            imageUrl: res.data.filename,
+          });
+          console.log(res.data.filename);
+          this.props.getImgUrl(res.data.filename);
+        } else {
+          message.error("上传失败");
+        }
+      })
+      .catch((rej) => {});
+    /*  // 获取文件后缀
     let filetype = "";
     let fileName = req.file.name;
     let first = fileName.lastIndexOf(".");
@@ -74,7 +93,7 @@ class Update extends React.Component {
           this.props.getImgUrl(imgurl);
         });
       }
-    });
+    }); */
   };
 
   render() {
