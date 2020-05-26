@@ -5,6 +5,8 @@ import PrivateRoute from "../PrivateRoute";
 //首页
 import Home from "@/pages/home";
 import AllList from "@/pages/all/list";
+import UserList from "@/pages/user/list";
+import UserDetail from "@/pages/user/detail";
 import ArticreList from "@/pages/articre/list";
 import ArticreAdd from "@/pages/articre/add";
 import ArticreDetail from "@/pages/articre/detail";
@@ -18,10 +20,16 @@ class ContentMain extends React.Component {
             <Redirect exact from="/" to="/home" />
             <PrivateRoute path="/home" component={Home}></PrivateRoute>
             <PrivateRoute path="/all/list" component={AllList}></PrivateRoute>
+            <PrivateRoute path="/user/list" component={UserList}></PrivateRoute>
+            <PrivateRoute
+              path="/user/detail/:id"
+              component={UserDetail}
+            ></PrivateRoute>
             <PrivateRoute
               path="/articre/list"
               component={ArticreList}
             ></PrivateRoute>
+
             <PrivateRoute
               path="/articre/add/:id"
               exact

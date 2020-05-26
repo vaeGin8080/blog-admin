@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, Tag, Button, message, Input, Row, Col, Modal } from "antd";
-import { getAllList, remove } from "@/api";
+import { getUserList } from "@/api/user";
 import { Link } from "react-router-dom";
 import { parseTime } from "@/utils/utils";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
@@ -9,7 +9,7 @@ const size = "default";
 const { Search } = Input;
 const { confirm } = Modal;
 
-class AllList extends React.Component {
+class UserList extends React.Component {
   constructor(props) {
     super();
     this.state = {
@@ -23,47 +23,45 @@ class AllList extends React.Component {
     this.columns = [
       {
         title: "序号",
-        dataIndex: "blog_id",
-        key: "blogId",
+        dataIndex: "user_id",
+        key: "user_id",
       },
       {
-        title: "标题",
-        dataIndex: "blog_title",
-        key: "blog_title",
+        title: "用户名",
+        dataIndex: "user_name",
+        key: "user_name",
       },
       {
-        title: "作者",
-        dataIndex: "blog_author",
-        key: "blog_author",
-      },
-      {
-        title: "简介",
-        dataIndex: "blog_brief",
-        key: "blog_brief",
-      },
-      {
-        title: "分类",
-        dataIndex: "blog_tag",
-        key: "blog_tag",
+        title: "头像",
+        dataIndex: "headerImg",
+        key: "headerImg",
         render: (text, record) => (
-          <div className="table-actions">
-            <Tag color="volcano" key={text}>
-              {text}
-            </Tag>
-          </div>
+          <img
+            style={{ width: "50px", height: "50px", objectFit: "cover" }}
+            src={text}
+          />
         ),
       },
       {
-        title: "点赞数",
-        dataIndex: "likeCount",
-        key: "likeCount",
+        title: "公司",
+        dataIndex: "user_compony",
+        key: "user_compony",
       },
       {
-        title: "评论数",
-        dataIndex: "commentCount",
-        key: "commentCount",
+        title: "职位",
+        dataIndex: "job",
+        key: "job",
       },
-
+      {
+        title: "简介",
+        dataIndex: "brief",
+        key: "brief",
+      },
+      {
+        title: "个人主页",
+        dataIndex: "user_web",
+        key: "user_web",
+      },
       {
         title: "更新时间",
         dataIndex: "create_date",
@@ -95,7 +93,7 @@ class AllList extends React.Component {
               size={size}
               style={{ background: "#67c23a", color: "white" }}
             >
-              <Link to={`/articre/detail/${text.blog_id}`}>查看</Link>
+              <Link to={`/user/detail/${text.user_id}`}>查看</Link>
             </Button>
           </div>
         ),
@@ -146,7 +144,7 @@ class AllList extends React.Component {
       loading: true,
     });
     console.log(obj);
-    getAllList(obj).then((res) => {
+    getUserList(obj).then((res) => {
       this.setState({
         list: res.data.data,
         loading: false,
@@ -200,4 +198,4 @@ class AllList extends React.Component {
   }
 }
 
-export default AllList;
+export default UserList;

@@ -8,11 +8,17 @@ const menus = [
     key: "/home",
   },
   {
-    title: "所有人",
+    title: "用户",
+    icon: "laptop",
+    key: "/user",
+    subs: [{ key: "/user/list", title: "用户列表", icon: "" }],
+  },
+  {
+    title: "全部",
     icon: "laptop",
     key: "/all",
     meta: ["admin"],
-    subs: [{ key: "/all/list", title: "所有文章列表", icon: "" }],
+    subs: [{ key: "/all/list", title: "文章列表", icon: "" }],
   },
   {
     title: "我的",

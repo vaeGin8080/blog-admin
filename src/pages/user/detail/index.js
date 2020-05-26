@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import Editor from "for-editor";
 import { Row, Col, PageHeader } from "antd";
-import { detail } from "@/api";
+import { getUserInfo } from "@/api/user";
 import "./index.css";
-var Markdown = require("react-markdown");
 
 class ArticreDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: "# 12",
       id: this.props.match.params.id,
       form: {},
     };
@@ -21,42 +19,44 @@ class ArticreDetail extends Component {
     this.require();
   }
   require() {
-    detail({
-      blog_id: this.state.id,
+    getUserInfo({
+      id: this.state.id,
     }).then((res) => {
       if (res.code === "200") {
+        let {
+          user_name,
+          brief,
+          job,
+          create_date,
+          headerImg,
+          user_id,
+          user_web,
+          user_compony,
+        } = res.data;
         let form = {
-          blog_title: res.data.blog_title,
-          blog_author: res.data.blog_author,
-          blog_brief: res.data.blog_brief,
-          blog_tag: res.data.blog_tag,
-          blog_cover: res.data.blog_cover,
-          likeCount: res.data.likeCount,
-          commentCount: res.data.commentCount,
+          user_name,
+          brief,
+          job,
+          create_date,
+          headerImg,
+          user_id,
+          user_web,
+          user_compony,
         };
         this.setState({
           form: form,
         });
-        if (res.data.blog_content.match(/^http/)) {
-          fetch(res.data.blog_content)
-            .then((res) => res.text())
-            .then((text) => this.setState({ content: text }));
-        } else {
-          this.setState({
-            content: res.data.blog_content,
-          });
-        }
       }
     });
   }
   render() {
-    let { content, form } = this.state;
+    let { form } = this.state;
     return (
       <div className="detail">
         <PageHeader
           className="site-page-header"
           onBack={() => this.goBack()}
-          title="博客详情"
+          title="用户详情"
         />
         <div
           style={{
@@ -68,18 +68,26 @@ class ArticreDetail extends Component {
         >
           <Row gutter={[16, 8]}>
             <Col flex="200px" className="label">
-              标题:
+              用户名:
             </Col>
             <Col flex="auto" className="value">
-              {form.blog_title}
+              {form.user_name}
             </Col>
           </Row>
           <Row gutter={[16, 8]}>
             <Col flex="200px" className="label">
-              作者:
+              公司:
             </Col>
             <Col flex="auto" className="value">
-              {form.blog_author}
+              {form.user_compony}
+            </Col>
+          </Row>
+          <Row gutter={[16, 8]}>
+            <Col flex="200px" className="label">
+              职位:
+            </Col>
+            <Col flex="auto" className="value">
+              {form.job}
             </Col>
           </Row>
           <Row gutter={[16, 8]}>
@@ -87,64 +95,31 @@ class ArticreDetail extends Component {
               简介:
             </Col>
             <Col flex="auto" className="value">
-              {form.blog_brief}
+              {form.brief}
             </Col>
           </Row>
           <Row gutter={[16, 8]}>
             <Col flex="200px" className="label">
-              分类:
+              个人主页:
             </Col>
             <Col flex="auto" className="value">
-              {form.blog_tag}
+              <a href={"http://" + form.user_web} target="_blank">
+                {form.user_web}
+              </a>
             </Col>
           </Row>
           <Row gutter={[16, 8]}>
             <Col flex="200px" className="label">
-              点赞数:
-            </Col>
-            <Col flex="auto" className="value">
-              {form.likeCount}
-            </Col>
-          </Row>
-          <Row gutter={[16, 8]}>
-            <Col flex="200px" className="label">
-              评论数:
-            </Col>
-            <Col flex="auto" className="value">
-              {form.commentCount}
-            </Col>
-          </Row>
-          <Row gutter={[16, 8]}>
-            <Col flex="200px" className="label">
-              封面图片:
+              头像:
             </Col>
             <Col flex="auto" className="value">
               <img
                 style={{ width: "100px", height: "100px", objectFit: "cover" }}
-                src={form.blog_cover}
+                src={form.headerImg}
               />
             </Col>
           </Row>
         </div>
-        <Row gutter={[16, 8]} justify="start">
-          <Col flex="200px">博客内容:</Col>
-        </Row>
-        <Editor
-          height="auto"
-          style={{ maxHeihgt: "100%" }}
-          value={content}
-          onChange={this.handleChange}
-          preview={true}
-          subfield={false}
-          toolbar={{}}
-        />
-        {/* <Markdown
-          source={content}
-          escapeHtml={false}
-          renderers={{
-            code: CodeBlock
-          }}
-        ></Markdown> */}
       </div>
     );
   }

@@ -43,16 +43,6 @@ class ArticreList extends React.Component {
         key: "blog_brief",
       },
       {
-        title: "更新时间",
-        dataIndex: "create_date",
-        key: "create_date",
-        render: (text, record) => (
-          <div className="table-actions">
-            {parseTime(text, "{y}-{m}-{d} {h}:{i}:{s}")}
-          </div>
-        ),
-      },
-      {
         title: "分类",
         dataIndex: "blog_tag",
         key: "blog_tag",
@@ -64,6 +54,27 @@ class ArticreList extends React.Component {
           </div>
         ),
       },
+      {
+        title: "点赞数",
+        dataIndex: "likeCount",
+        key: "likeCount",
+      },
+      {
+        title: "评论数",
+        dataIndex: "commentCount",
+        key: "commentCount",
+      },
+      {
+        title: "更新时间",
+        dataIndex: "create_date",
+        key: "create_date",
+        render: (text, record) => (
+          <div className="table-actions">
+            {parseTime(text, "{y}-{m}-{d} {h}:{i}:{s}")}
+          </div>
+        ),
+      },
+
       {
         title: "操作",
         key: "action",

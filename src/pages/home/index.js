@@ -3,9 +3,9 @@ import { Carousel } from "antd";
 import "./index.scss";
 
 const imgs = [
-  // "https://www.vaegin.top/img/angel.jpg",
-  "https://www.vaegin.top/images/bg.jpg",
-  "https://www.vaegin.top/images/bg4.jpg",
+  "https://vaegin.top/img/20180818104651_cGNvT.jpeg",
+  "https://vaegin.top/img/20160308193117_nkfKX.jpeg",
+  "https://vaegin.top/img/20160308193000_RAcVw.jpeg",
 ];
 
 class Home extends React.Component {

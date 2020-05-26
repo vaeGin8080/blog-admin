@@ -2,7 +2,16 @@ import React, { Component } from "react";
 import Editor from "for-editor";
 import Update from "@/components/Update";
 import UpdateFile from "@/components/UpdateFile";
-import { Form, Input, Button, Tabs, message, PageHeader, Select } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Tabs,
+  message,
+  PageHeader,
+  Select,
+  InputNumber,
+} from "antd";
 import { insert, detail, update } from "@/api";
 import "./index.css";
 
@@ -43,7 +52,7 @@ class ArticreAdd extends Component {
   }
   componentDidMount() {
     if (this.state.id) {
-      // this.require();
+      this.require();
     }
   }
   require() {
@@ -58,6 +67,8 @@ class ArticreAdd extends Component {
             blog_brief: res.data.blog_brief,
             blog_tag: res.data.blog_tag,
             blog_cover: res.data.blog_cover,
+            likeCount: res.data.likeCount,
+            commentCount: res.data.commentCount,
           });
         this.state.faceImg = res.data.blog_cover;
         if (res.data.blog_content.match(/^http/)) {
@@ -86,6 +97,8 @@ class ArticreAdd extends Component {
       blog_author: data.blog_author,
       blog_brief: data.blog_brief,
       blog_tag: data.blog_tag,
+      likeCount: data.likeCount,
+      commentCount: data.commentCount,
       blog_content: content,
       blog_cover: faceImg ? faceImg : "",
     };
@@ -190,6 +203,21 @@ class ArticreAdd extends Component {
               {tagOption}
             </Select>
           </Form.Item>
+          {id ? (
+            <Form.Item label="点赞数" name="likeCount">
+              <InputNumber min={0} />
+            </Form.Item>
+          ) : (
+            ""
+          )}
+          {id ? (
+            <Form.Item label="评论数" name="commentCount">
+              <InputNumber min={0} />
+            </Form.Item>
+          ) : (
+            ""
+          )}
+
           <Form.Item label="封面图片">
             <Update
               getImgUrl={this.getImgUrl}
