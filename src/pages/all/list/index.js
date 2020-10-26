@@ -130,7 +130,6 @@ class AllList extends React.Component {
     });
   };
   handleSearch = (name) => {
-    console.log(name);
     this.require(name);
   };
 
@@ -145,7 +144,6 @@ class AllList extends React.Component {
     this.setState({
       loading: true,
     });
-    console.log(obj);
     getAllList(obj).then((res) => {
       this.setState({
         list: res.data.data,
@@ -159,7 +157,6 @@ class AllList extends React.Component {
     });
   }
   handleTableChange = (pagination) => {
-    console.log(pagination);
     this.setState(
       {
         pagination: {
@@ -187,6 +184,9 @@ class AllList extends React.Component {
             />
           </Col>
         </Row>
+        <div>
+          <img />
+        </div>
         <Table
           columns={this.columns}
           dataSource={list}

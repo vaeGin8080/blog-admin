@@ -2,13 +2,23 @@
   height: calc(100vh - 64px);
   /*background: #364d79;*/
   overflow: hidden;
+  position: relative;
 }
 .home .size {
   height: calc(100vh - 64px);
-  width: 100%;
+  width: 100vw;
   background-size: contain;
   background-repeat: repeat-x;
   background-position: 0% 50%;
+  transition: all 0.5s ease 0s;
+}
+
+.bloack {
+  background: white;
+  padding: 0 20px 20px;
+}
+.chart {
+  height: 260px;
 }
 .home .ant-carousel .slick-slider .slick-arrow {
   width: 20px;

@@ -79,13 +79,13 @@ class UserList extends React.Component {
         render: (text, record) => (
           <div className="table-actions">
             <Button size={size} type="primary">
-              <Link to={`/articre/add/${text.blog_id}`}>编辑</Link>
+              <Link to={`/user/update/${text.user_id}`}>编辑</Link>
             </Button>
             <Button
               size={size}
               type="primary"
               danger
-              onClick={() => this.handleRemove(text.blog_id)}
+              onClick={() => this.handleRemove(text.user_id)}
             >
               删除
             </Button>

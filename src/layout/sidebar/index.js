@@ -1,17 +1,19 @@
 import React from "react";
 import SlideItem from "./sideItem/index.js";
-
-const menus = [
+import { getSession } from "@/utils/session";
+var menus = [
   {
     title: "工作台",
     icon: "home",
     key: "/home",
+    meta: ["user"],
   },
   {
-    title: "用户",
+    title: "配置",
     icon: "laptop",
     key: "/user",
-    subs: [{ key: "/user/list", title: "用户列表", icon: "" }],
+    meta: ["admin"],
+    subs: [{ key: "/user/list", title: "用户管理", icon: "" }],
   },
   {
     title: "全部",
@@ -24,11 +26,20 @@ const menus = [
     title: "我的",
     icon: "laptop",
     key: "/articre",
+    meta: ["user"],
     subs: [{ key: "/articre/list", title: "文章列表", icon: "" }],
   },
 ];
+console.log("menu");
+
 class Slide extends React.Component {
   render() {
+    const uid = getSession("uid");
+    menus = menus.filter((item) => {
+      return uid == 1
+        ? true
+        : item.meta && !(item.meta.indexOf("admin") !== -1);
+    });
     return <SlideItem menus={menus}></SlideItem>;
   }
 }

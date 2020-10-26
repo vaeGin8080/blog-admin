@@ -32,7 +32,6 @@ const tagOption = tag.map((item, index) => {
     </Option>
   );
 });
-console.log(tagOption);
 class ArticreAdd extends Component {
   formRef = React.createRef();
   constructor(props) {

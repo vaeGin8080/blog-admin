@@ -7,6 +7,7 @@ import Home from "@/pages/home";
 import AllList from "@/pages/all/list";
 import UserList from "@/pages/user/list";
 import UserDetail from "@/pages/user/detail";
+import UserUpdate from "@/pages/user/update";
 import ArticreList from "@/pages/articre/list";
 import ArticreAdd from "@/pages/articre/add";
 import ArticreDetail from "@/pages/articre/detail";
@@ -26,10 +27,17 @@ class ContentMain extends React.Component {
               component={UserDetail}
             ></PrivateRoute>
             <PrivateRoute
+              path="/user/update/:id"
+              component={UserUpdate}
+            ></PrivateRoute>
+            <PrivateRoute
+              path="/user/update"
+              component={UserUpdate}
+            ></PrivateRoute>
+            <PrivateRoute
               path="/articre/list"
               component={ArticreList}
             ></PrivateRoute>
-
             <PrivateRoute
               path="/articre/add/:id"
               exact

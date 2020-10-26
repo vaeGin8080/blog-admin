@@ -17,3 +17,13 @@ export function getUserInfo(data) {
     data,
   });
 }
+
+// 修改
+
+export function getUserUpdate(query) {
+  return request({
+    url: "/userUpdate",
+    method: "post",
+    data: query,
+  });
+}
